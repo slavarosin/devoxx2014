@@ -1,0 +1,78 @@
+GET /person/person/_search?search_type=count
+{
+    "aggs": {
+       "by_country": {
+          "terms": {
+             "field": "address.country"
+          }
+       }
+    }
+}
+
+GET /person/person/_search?search_type=count
+{
+    "aggs": {
+       "by_date": {
+          "date_histogram": {
+             "field": "dateOfBirth",
+             "interval": "year",
+             "format": "yyyy"
+          }
+       }
+    }
+}
+
+GET /person/person/_search?search_type=count
+{
+  "query": { "bool": { "must": [
+      { "match": { "address.country": "Germany"} },
+      { "range": { "dateOfBirth": { "from": "1970", "to": "1971" }}}
+  ]}},
+  "aggs": {
+    "by_date": {
+      "date_histogram": {
+        "field": "dateOfBirth",
+        "interval": "month",
+        "format": "yyyy-MM"
+      },
+      "aggs": {
+        "by_gender": {
+          "terms": {
+            "field": "gender"
+          }
+        }
+      }
+    }
+  }
+}
+
+GET /person/person/_search?search_type=count
+{
+  "query": { "bool": { "must": [
+      { "match": { "address.country": "Germany"} },
+      { "range": { "dateOfBirth": { "from": "1970", "to": "1971" }}}
+  ]}},
+  "aggs": {
+    "by_date": {
+      "date_histogram": {
+        "field": "dateOfBirth",
+        "interval": "month",
+        "format": "yyyy-MM"
+      },
+      "aggs": {
+        "by_gender": {
+          "terms": {
+            "field": "gender"
+          },
+          "aggs": {
+            "children": {
+              "stats": {
+                "field": "children"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

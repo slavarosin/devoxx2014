@@ -1,0 +1,25 @@
+PUT /_snapshot/main_backup
+{
+    "type" : "fs",
+    "settings" : {
+        "location" : "/tmp/es-backup"
+    }
+}
+
+PUT /_snapshot/main_backup/snap1?wait_for_completion=true
+
+GET /_snapshot/main_backup/_all
+
+# Remove person index
+DELETE /person
+
+# This one should fail
+GET /person/_search
+
+# Restore our data
+POST /_snapshot/main_backup/snap1/_restore?wait_for_completion=true
+{
+    "indices":"+person"
+}
+
+GET /person/_search

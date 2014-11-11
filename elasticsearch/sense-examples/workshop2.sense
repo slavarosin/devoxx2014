@@ -1,0 +1,68 @@
+GET /person/person/_search
+{
+    "query": {
+        "term": {
+           "address.country": {
+              "value": "Germany"
+           }
+        }
+    }
+}
+
+GET /person/person/_search
+{
+    "query": {
+        "term": {
+           "address.country": {
+              "value": "germany"
+           }
+        }
+    }
+}
+
+GET /person/person/_search
+{
+    "query": {
+        "match": {
+           "address.country": "Germany"
+        }
+    }
+}
+
+GET /person/person/_search
+{
+    "query": {
+        "bool": {
+            "must": [ {
+                "match": {
+                      "address.country": "Germany"
+                   }
+               }, {
+                   "range": {
+                      "dateOfBirth": {
+                         "from": "1970",
+                         "to": "1971"
+                      }
+                   }
+               }
+            ]
+        }
+    }
+}
+
+# We now remove all data and reinject with a mapping
+DELETE /person
+
+# java -jar injector-x.x.x.jar 500000 10000 workshop
+
+GET /person/person/_mapping
+
+# Search again
+GET /person/person/_search
+{
+  "query": {
+    "term": {
+      "address.country": "Germany"
+    }
+  }
+}

@@ -1,0 +1,69 @@
+####### Part 1
+# Remove index person
+DELETE /person
+
+POST /person/person
+{
+   "name":"Anaelle Alessio",
+   "dateOfBirth":"2009-09-05",
+   "gender":"female",
+   "marketing":{
+      "shoes":1000,
+      "fashion":1200,
+      "music":800
+   },
+   "address":{
+      "country":"England",
+      "zipcode":"5226",
+      "city":"Plymouth",
+      "countrycode":"GB"
+   }
+}
+
+GET /person/person/zvb2udm2TSa8Zyp9LnD1nA
+
+PUT /person/person/zvb2udm2TSa8Zyp9LnD1nA
+{
+   "name":"Anaelle Alessio",
+   "dateOfBirth":"2009-09-05",
+   "gender":"female",
+   "marketing":{
+      "shoes":1001,
+      "fashion":1200,
+      "music":800
+   },
+   "address":{
+      "country":"England",
+      "zipcode":"5226",
+      "city":"Plymouth",
+      "countrycode":"GB"
+   }
+}
+
+DELETE /person/person/zvb2udm2TSa8Zyp9LnD1nA
+
+####### Part 2
+# Remove index person
+DELETE /person
+
+PUT /person/person/1
+{
+   "name":"Anaelle Alessio"
+}
+
+PUT /person/person/2
+{
+   "name":"Joe Smith"
+}
+
+PUT /person/person/1
+{
+   "name":"Anaelle Alessio",
+   "dateOfBirth":"2009-09-05"
+}
+
+PUT /person/person/2
+{
+   "name":"Joe Smith",
+   "gender":"male"
+}
